@@ -1,0 +1,114 @@
+generated: '2026-08-02'
+method: probed
+source: https://shop.aptera.us/api/mcp
+status: published
+note: >-
+  Aptera Motors runs no developer-program MCP server. Two MCP endpoints were found
+  live on Aptera hostnames, both platform-provided rather than authored by Aptera.
+  The Shopify storefront MCP server on shop.aptera.us is anonymous, answers
+  tools/list, and exposes five real tools with full JSON Schema input contracts —
+  it is genuinely agent-usable against Aptera's own merchandise catalog. The
+  WordPress MCP adapter on the corporate site is registered but auth-gated and
+  undocumented, so it is recorded as detected only.
+servers:
+- name: aptera-shop-storefront
+  transport: http
+  protocol: JSON-RPC 2.0 (Streamable HTTP)
+  url: https://shop.aptera.us/api/mcp
+  status: published
+  anonymous: true
+  platform: Shopify
+  authored_by: Shopify (platform-provided storefront MCP), not Aptera Motors
+  protocol_version: '2025-06-18'
+  server_info:
+    name: storefront-renderer
+    version: 0.1.0
+  capabilities:
+    tools:
+      listChanged: true
+    prompts:
+      listChanged: true
+    resources:
+      listChanged: true
+    logging: {}
+  resources: 0
+  prompts: 0
+  tools_file: aptera-motors-shop-mcp-tools.json
+  tools:
+  - name: search_catalog
+    description: Search for products from the online store, hosted on Shopify, using
+      natural language queries, filter criteria, or both. Results are paginated via
+      pagination.cursor.
+    input_properties: [meta, catalog]
+    required: []
+    ucp_capability: dev.ucp.shopping.catalog.search
+  - name: get_product_details
+    description: Look up a product by ID; the options parameter selects a specific
+      variant for the product card.
+    input_properties: [product_id, options, country, language]
+    required: [product_id]
+    ucp_capability: dev.ucp.shopping.catalog.lookup
+  - name: get_cart
+    description: Get the cart including items, shipping options, discount info and
+      checkout URL for a given cart id.
+    input_properties: [cart_id]
+    required: [cart_id]
+    ucp_capability: dev.ucp.shopping.cart
+  - name: update_cart
+    description: Perform updates to a cart — add/remove/update line items, buyer
+      information, shipping details, discount codes, gift cards and notes.
+    input_properties: [cart_id, add_items, update_items, remove_line_ids, buyer_identity,
+      delivery_addresses_to_add, delivery_addresses_to_replace, selected_delivery_options,
+      discount_codes, gift_card_codes, note]
+    required: []
+    ucp_capability: dev.ucp.shopping.cart
+  - name: search_shop_policies_and_faqs
+    description: Get facts about the store's policies, products or services.
+    input_properties: [query, context]
+    required: [query]
+  x-evidence:
+    fetched: '2026-08-02'
+    method_probed: tools/list
+    http_status: 200
+    content_type: application/json; charset=utf-8
+    tool_count: 5
+- name: aptera-us-wordpress-mcp-adapter
+  transport: http
+  url: https://aptera.us/wp-json/mcp/mcp-adapter-default-server
+  status: detected
+  anonymous: false
+  gated: true
+  platform: WordPress MCP Adapter plugin
+  authored_by: WordPress plugin (MCP Adapter), not Aptera Motors
+  note: >-
+    The route is registered (the WordPress REST index at /wp-json/ advertises the
+    "mcp" and "wp-abilities/v1" namespaces) but every method returns HTTP 401
+    rest_forbidden anonymously, and no OAuth discovery document is served on the
+    host. The live tool schema therefore requires authenticated introspection and
+    is not recorded here. Aptera does not document this endpoint anywhere.
+  x-evidence:
+    fetched: '2026-08-02'
+    method_probed: tools/list
+    http_status: 401
+    body: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+divergence:
+  note: >-
+    The published agent instructions at /agents.md and /llms.txt describe a
+    checkout-oriented tool set (create_cart, create_checkout, update_checkout,
+    complete_checkout) that the live tools/list on /api/mcp does not return. The
+    live server exposes cart read/write plus catalog search/lookup and a policy
+    Q&A tool; the checkout verbs are UCP capabilities reachable through the
+    versioned UCP/MCP endpoint (/api/ucp/mcp), which returned HTTP 422 to a plain
+    JSON-RPC tools/list and requires UCP version negotiation.
+  documented_but_not_in_tools_list: [create_cart, create_checkout, update_checkout,
+    complete_checkout]
+  in_tools_list_but_not_documented: [get_cart, update_cart, get_product_details,
+    search_shop_policies_and_faqs]
+  no_tool_crosswalk_emitted: >-
+    Aptera publishes no OpenAPI, so there is no operationId set to bind these tools
+    to. A ToolCrosswalk artifact would have to be invented rather than derived.
+related:
+  ucp_profile: ../well-known/aptera-motors-shop-ucp.json
+  agent_instructions: ../skills/aptera-motors-shop-agents.md
+  llms_txt: ../llms/aptera-motors-shop-llms.txt
+  authentication: ../authentication/aptera-motors-authentication.yml

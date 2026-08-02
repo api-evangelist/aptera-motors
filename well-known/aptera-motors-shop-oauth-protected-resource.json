@@ -1,0 +1,9 @@
+{
+    "resource": "https://shop.aptera.us",
+    "authorization_servers": [
+        "https://shopify.com/authentication/85136474359"
+    ],
+    "bearer_methods_supported": [
+        "header"
+    ]
+}

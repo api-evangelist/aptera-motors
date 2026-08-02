@@ -1,23 +1,127 @@
 aid: aptera-motors
 name: Aptera Motors
-description: 'Aptera Motors is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Aptera Motors Corp. (Nasdaq: SEV) is a Carlsbad, California solar electric
+  vehicle manufacturer founded by Steve Fambro and Chris Anthony. The company builds
+  a three-wheeled, two-seat enclosed autocycle covered in roughly 700 watts of integrated
+  solar cells, designed to add up to 40 miles of range per day from sunlight alone
+  and to travel up to 10,000 miles a year on free solar power, with a 400-mile battery
+  range on the Launch Edition, over 320 MPGe efficiency, a ~2,200 lb curb weight and
+  0-60 mph in under six seconds. Aptera sells reservations direct to consumers through
+  its own configurator, runs a branded Shopify merchandise storefront, and has committed
+  to open-source driver assistance by integrating comma.ai openpilot into the vehicle.
+  Aptera publishes no public developer program, API documentation, or machine-readable
+  API contract as of this enrichment pass.'
+image: https://i0.wp.com/aptera.us/wp-content/uploads/2026/04/website_pic_og.jpg
 url: https://raw.githubusercontent.com/api-evangelist/aptera-motors/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment-pipeline
 specificationVersion: '0.20'
 created: '2026-08-02'
 modified: '2026-08-02'
+x-enrichment:
+  date: '2026-08-02'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1
 tags:
 - Company
-apis: []
+- Automotive
+- Electric Vehicles
+- Solar
+- Manufacturing
+- Clean Energy
+- Transportation
+- Consumer Products
+- Mobility
+apis:
+- name: Aptera Shop Storefront Agent Commerce API
+  description: 'The agent-facing commerce surface of Aptera Motors'' branded merchandise
+    storefront at shop.aptera.us. It is a Model Context Protocol server (protocol
+    2025-06-18) answering anonymously at /api/mcp with five verified tools —
+    search_catalog, get_product_details, get_cart, update_cart and
+    search_shop_policies_and_faqs — backed by a Universal Commerce Protocol
+    2026-04-08 merchant profile at /.well-known/ucp and an OAuth 2.0 / OpenID
+    Connect customer-account authorization server. Note: this surface is provided by
+    the Shopify platform rather than authored by Aptera Motors, and it covers
+    merchandise only. Aptera publishes no vehicle, reservation, or telemetry API and
+    no OpenAPI definition.'
+  humanURL: https://shop.aptera.us/
+  baseURL: https://shop.aptera.us/api/mcp
+  image: https://i0.wp.com/aptera.us/wp-content/uploads/2026/04/website_pic_og.jpg
+  tags:
+  - Commerce
+  - E-Commerce
+  - MCP
+  - Agents
+  - Merchandise
+  x-platform: Shopify
+  x-authored-by: Shopify (platform-provided), not Aptera Motors
+  properties:
+  - type: MCPServer
+    url: mcp/aptera-motors-mcp.yml
+  - type: LLMsTxt
+    url: llms/aptera-motors-shop-llms.txt
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Authentication
+    url: authentication/aptera-motors-authentication.yml
+  - type: OAuthScopes
+    url: scopes/aptera-motors-scopes.yml
+  - type: Conventions
+    url: conventions/aptera-motors-conventions.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/aptera-motors-domain-security.yml
+- type: MCPServer
+  url: mcp/aptera-motors-mcp.yml
+- type: WellKnown
+  url: well-known/aptera-motors-well-known.yml
+- type: LLMsTxt
+  url: llms/aptera-motors-shop-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Authentication
+  url: authentication/aptera-motors-authentication.yml
+- type: OAuthScopes
+  url: scopes/aptera-motors-scopes.yml
+- type: Conventions
+  url: conventions/aptera-motors-conventions.yml
+- type: Conformance
+  url: conformance/aptera-motors-conformance.yml
 - type: Website
+  url: https://aptera.us/
+- type: Blog
+  url: https://aptera.us/updates/
+- type: BlogRSS
+  url: https://aptera.us/updates/feed/
+- type: Support
+  url: https://aptera.us/contact-us/
+- type: HelpCenter
+  url: https://aptera.us/discovery-center/
+- type: Pricing
+  url: https://aptera.us/reserve/
+- type: SignUp
+  url: https://aptera.us/reserve/
+- type: TermsOfService
+  url: https://aptera.us/terms-of-service/
+- type: TermsOfUse
+  url: https://aptera.us/terms-of-use/
+- type: PrivacyPolicy
+  url: https://aptera.us/privacy-policy/
+- type: Careers
+  url: https://aptera.us/careers/
+- type: PressRoom
+  url: https://aptera.us/media-room/
+- type: InvestorRelations
+  url: https://ir.aptera.us/
+- type: Store
+  url: https://shop.aptera.us/
+- type: SecondaryMarket
   url: https://forgeglobal.com/aptera-motors_stock/

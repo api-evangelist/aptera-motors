@@ -1,0 +1,98 @@
+generated: '2026-08-02'
+method: probed
+source: live GET probes of /.well-known/* on every Aptera host
+note: >-
+  Aptera Motors publishes no developer program, so no /.well-known/ surface exists
+  on the corporate site (aptera.us). The Shopify-hosted merchandise storefront
+  (shop.aptera.us) does serve a real OAuth 2.0 / OpenID Connect discovery surface
+  and a Universal Commerce Protocol (UCP) merchant profile, both returned
+  anonymously from Aptera's own hostname. These are platform-provided by Shopify,
+  not authored by Aptera, but they are live, machine-readable and agent-usable.
+hosts:
+- host: https://aptera.us
+  platform: WordPress (WP Engine)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/dnt-policy.txt
+    status: 404
+  - path: /.well-known/change-password
+    status: 404
+- host: https://shop.aptera.us
+  platform: Shopify
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: aptera-motors-shop-openid-configuration.json
+    spec: OpenID Connect Discovery 1.0
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: aptera-motors-shop-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: aptera-motors-shop-oauth-protected-resource.json
+    spec: RFC 9728
+  - path: /.well-known/ucp
+    status: 200
+    file: aptera-motors-shop-ucp.json
+    spec: Universal Commerce Protocol 2026-04-08
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+non_well_known_agent_surface:
+- path: /robots.txt
+  host: https://shop.aptera.us
+  status: 200
+  note: carries explicit agent instructions and points at /agents.md, /.well-known/ucp
+    and the UCP/MCP endpoint
+- path: /llms.txt
+  host: https://shop.aptera.us
+  status: 200
+  file: ../llms/aptera-motors-shop-llms.txt
+- path: /agents.md
+  host: https://shop.aptera.us
+  status: 200
+  file: ../skills/aptera-motors-shop-agents.md
+- path: /api/mcp
+  host: https://shop.aptera.us
+  status: 200
+  note: anonymous MCP JSON-RPC endpoint; see ../mcp/aptera-motors-mcp.yml
+x-evidence:
+  fetched: '2026-08-02'
+  hosts_probed:
+  - aptera.us
+  - www.aptera.us
+  - shop.aptera.us
+  hosts_not_resolving:
+  - api.aptera.us
+  - developer.aptera.us
+  - docs.aptera.us
+  - my.aptera.us
+  - account.aptera.us
+  - app.aptera.us

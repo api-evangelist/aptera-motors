@@ -1,0 +1,24 @@
+generated: '2026-08-02'
+method: searched
+source: https://shop.aptera.us/agents.md
+note: >-
+  Aptera Motors publishes no OpenAPI, so no skills are grounded in REST operationIds.
+  The provider's Shopify storefront does publish its own agent instructions at
+  /agents.md (linked from robots.txt) — saved verbatim below. One additional skill is
+  generated from the five tool names and input schemas verified live via tools/list
+  on https://shop.aptera.us/api/mcp; every tool and field named in it was observed in
+  that response (see ../mcp/aptera-motors-shop-mcp-tools.json).
+skills:
+- file: aptera-motors-shop-agents.md
+  name: Agent Instructions — Shop Aptera
+  method: searched
+  source: https://shop.aptera.us/agents.md
+  api: mcp/aptera-motors-mcp.yml
+  surface: https://shop.aptera.us/api/mcp
+  note: provider-published, saved verbatim
+- file: aptera-motors-shop-catalog-and-cart.md
+  name: Search the Aptera store and build a cart
+  method: generated
+  api: mcp/aptera-motors-mcp.yml
+  surface: https://shop.aptera.us/api/mcp
+  operations: [search_catalog, get_product_details, update_cart, get_cart, search_shop_policies_and_faqs]

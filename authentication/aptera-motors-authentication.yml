@@ -1,0 +1,59 @@
+generated: '2026-08-02'
+method: derived
+source: well-known/aptera-motors-shop-openid-configuration.json, well-known/aptera-motors-shop-oauth-authorization-server.json,
+  well-known/aptera-motors-shop-oauth-protected-resource.json
+note: >-
+  Derived from the OAuth 2.0 / OpenID Connect discovery documents served anonymously
+  from https://shop.aptera.us. Aptera publishes no OpenAPI and no developer
+  authentication documentation; this profile describes the Shopify customer-account
+  authorization server backing the merchandise storefront and its MCP surface. The
+  corporate site (aptera.us) exposes no authenticated API surface beyond a gated
+  WordPress REST/MCP adapter that uses WordPress application passwords.
+summary:
+  types: [oauth2, openIdConnect]
+  api_key_in: []
+  oauth2_flows: [authorizationCode]
+  anonymous_surfaces:
+  - https://shop.aptera.us/api/mcp (MCP tools/list and catalog tools answer without
+      a token)
+  - https://shop.aptera.us/products.json (public Shopify product feed)
+  - https://aptera.us/wp-json/wp/v2 (public WordPress REST read surface)
+schemes:
+- name: shopify-customer-account-oidc
+  type: openIdConnect
+  openIdConnectUrl: https://shop.aptera.us/.well-known/openid-configuration
+  issuer: https://shopify.com/authentication/85136474359
+  authorizationUrl: https://shopify.com/authentication/85136474359/oauth/authorize
+  tokenUrl: https://shopify.com/authentication/85136474359/oauth/token
+  endSessionUrl: https://shopify.com/authentication/85136474359/logout
+  jwksUri: https://shopify.com/authentication/85136474359/.well-known/jwks.json
+  grant_types: [authorization_code, refresh_token, 'urn:ietf:params:oauth:grant-type:jwt-bearer']
+  response_types: [code]
+  pkce: [S256]
+  token_endpoint_auth_methods: [client_secret_basic]
+  id_token_signing_alg: [RS256]
+  subject_types: [public]
+  claims: [iss, sub, aud, exp, iat, nonce, sid, email, email_verified]
+  scopes: [openid, email, 'customer-account-api:full', 'customer-account-mcp-api:full']
+  sources: [well-known/aptera-motors-shop-openid-configuration.json]
+- name: shopify-oauth-protected-resource
+  type: oauth2
+  spec: RFC 9728 OAuth 2.0 Protected Resource Metadata
+  resource: https://shop.aptera.us
+  authorization_servers: [https://shopify.com/authentication/85136474359]
+  bearer_methods_supported: [header]
+  sources: [well-known/aptera-motors-shop-oauth-protected-resource.json]
+- name: wordpress-application-passwords
+  type: http
+  scheme: basic
+  status: gated
+  host: https://aptera.us
+  authorization_endpoint: https://aptera.us/wp-admin/authorize-application.php
+  note: >-
+    Advertised by the WordPress REST index at /wp-json/. Gates the wp-abilities/v1
+    and mcp namespaces, which return HTTP 401 rest_forbidden anonymously. Not a
+    developer-facing authentication method — it is CMS administration.
+  sources: [https://aptera.us/wp-json/]
+x-evidence:
+  fetched: '2026-08-02'
+  discovery_documents_http_status: 200

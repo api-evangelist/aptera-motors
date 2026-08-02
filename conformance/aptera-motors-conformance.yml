@@ -1,0 +1,69 @@
+generated: '2026-08-02'
+method: derived
+source: well-known/, mcp/aptera-motors-mcp.yml, security/aptera-motors-domain-security.yml
+note: >-
+  Aptera Motors makes no published API compliance or certification claims — there is
+  no trust center, no security.txt, no SOC 2 / ISO 27001 statement, and no developer
+  program. Everything asserted below is derived from documents observed live on
+  Aptera hostnames, all of which are Shopify platform surfaces on the merchandise
+  storefront. No Compliance pointer is emitted, because no compliance program is
+  published.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: RFC 8414 authorization-server metadata served at https://shop.aptera.us/.well-known/oauth-authorization-server
+- id: oidc-discovery
+  conforms: true
+  evidence: OpenID Connect Discovery 1.0 document served at https://shop.aptera.us/.well-known/openid-configuration
+- id: rfc9728-oauth-protected-resource
+  conforms: true
+  evidence: protected-resource metadata served at https://shop.aptera.us/.well-known/oauth-protected-resource
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported [S256] in the OIDC discovery document
+- id: mcp
+  conforms: true
+  version: '2025-06-18'
+  evidence: initialize on https://shop.aptera.us/api/mcp returns protocolVersion 2025-06-18
+    with tools/prompts/resources/logging capabilities
+- id: ucp-universal-commerce-protocol
+  conforms: true
+  version: '2026-04-08'
+  evidence: merchant profile at https://shop.aptera.us/.well-known/ucp advertising
+    dev.ucp.shopping services and eight capabilities (checkout, fulfillment, discount,
+    cart, order, catalog.search, catalog.lookup, dev.shopify.catalog)
+- id: llmstxt
+  conforms: true
+  evidence: https://shop.aptera.us/llms.txt returns 200 with agent instructions
+- id: agents-md
+  conforms: true
+  evidence: https://shop.aptera.us/agents.md returns 200 and is referenced from robots.txt
+- id: openapi
+  conforms: false
+  evidence: no OpenAPI or Swagger document found on any Aptera host
+- id: asyncapi
+  conforms: false
+  evidence: no event, streaming or webhook surface published
+- id: a2a-agent-card
+  conforms: false
+  evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on
+    every Aptera host
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on aptera.us and shop.aptera.us
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: no spec or error reference published to assess
+- id: dnssec
+  conforms: false
+  evidence: no DNSKEY record on aptera.us (see security/aptera-motors-domain-security.yml)
+- id: hsts
+  conforms: partial
+  evidence: aptera.us and shop.aptera.us send Strict-Transport-Security; ir.aptera.us
+    does not
+- id: dmarc
+  conforms: true
+  evidence: DMARC record present on aptera.us with policy quarantine
+- id: caa
+  conforms: false
+  evidence: no CAA record on aptera.us

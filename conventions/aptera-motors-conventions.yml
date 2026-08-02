@@ -1,0 +1,80 @@
+generated: '2026-08-02'
+method: derived
+source: skills/aptera-motors-shop-agents.md, mcp/aptera-motors-mcp.yml, well-known/aptera-motors-shop-ucp.json
+note: >-
+  Aptera Motors publishes no API design guide. These conventions are read off the
+  only machine-readable surface on an Aptera hostname — the Shopify storefront MCP
+  / UCP endpoint at shop.aptera.us and its published agent instructions. Idempotency
+  is NOT documented anywhere on this surface, so no Idempotency pointer is emitted.
+scope: https://shop.aptera.us — Shopify-hosted merchandise storefront (agent surface)
+authentication:
+  anonymous_read: true
+  style: OAuth 2.0 authorization code + PKCE for customer-scoped access; the catalog
+    and cart tools answer anonymously
+  detail: ../authentication/aptera-motors-authentication.yml
+transport:
+  protocol: JSON-RPC 2.0 over HTTP (MCP Streamable HTTP)
+  endpoint: https://shop.aptera.us/api/mcp
+  accept: application/json, text/event-stream
+  content_type: application/json
+idempotency:
+  supported: unknown
+  documented: false
+  note: >-
+    No idempotency key header, parameter, or retry contract is documented on the
+    storefront agent surface, and there is no OpenAPI to inspect for an
+    Idempotency-Key parameter. Deliberately not asserted.
+pagination:
+  style: cursor
+  request_field: catalog.pagination.cursor (search_catalog)
+  response_field: pagination.cursor
+  note: >-
+    "Results are paginated, with initial results limited to improve experience. Use
+    the pagination.cursor from the response to fetch additional pages when users
+    request more results." — search_catalog tool description
+versioning:
+  mcp_protocol_version: '2025-06-18'
+  ucp_version: '2026-04-08'
+  ucp_supported_versions: ['2026-04-08', '2026-01-23']
+  scheme: date-based version identifiers negotiated per protocol; no URI-path or
+    header API version on the storefront REST surface
+rate_limiting:
+  documented: true
+  signal: HTTP 429
+  scope: per IP on the MCP endpoint
+  guidance: '"Respect rate limits. The MCP endpoint is rate-limited per IP. Back off
+    on 429 responses." — /agents.md'
+  headers: not documented
+error_envelope:
+  style: JSON-RPC 2.0 error objects on /api/mcp; WordPress REST error objects
+    ({code, message, data.status}) on aptera.us/wp-json
+  problem_json: false
+buyer_context:
+  note: '"Use buyer context. Pass context.address_country and context.currency for
+    accurate pricing and availability." — /agents.md'
+  fields: [context.address_country, context.address_region, context.postal_code,
+    context.currency, country, language]
+human_in_the_loop:
+  required: true
+  rule: >-
+    Checkout, payment and order placement must not be completed by an agent without
+    explicit, contemporaneous human approval. robots.txt and /agents.md both state
+    that scripted form fills, browser automation and end-to-end agent flows that
+    finalize payment are prohibited; agents transacting on a buyer's behalf must use
+    the UCP/MCP endpoints or the Shopify shopping skill, both of which require buyer
+    approval before payment.
+public_read_surface:
+  note: documented in /agents.md as requiring no authentication
+  endpoints:
+  - GET /collections/all
+  - GET /products/{handle}
+  - GET /products/{handle}.json
+  - GET /collections/{handle}/products.json
+  - GET /search?q={query}&type=product
+  - GET /sitemap.xml
+cross_links:
+  authentication: ../authentication/aptera-motors-authentication.yml
+  scopes: ../scopes/aptera-motors-scopes.yml
+  conformance: ../conformance/aptera-motors-conformance.yml
+  mcp: ../mcp/aptera-motors-mcp.yml
+  well_known: ../well-known/aptera-motors-well-known.yml
