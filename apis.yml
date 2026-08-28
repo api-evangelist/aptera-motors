@@ -11,6 +11,17 @@ description: 'Aptera Motors Corp. (Nasdaq: SEV) is a Carlsbad, California solar 
   to open-source driver assistance by integrating comma.ai openpilot into the vehicle.
   Aptera publishes no public developer program, API documentation, or machine-readable
   API contract as of this enrichment pass.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://i0.wp.com/aptera.us/wp-content/uploads/2026/04/website_pic_og.jpg
 url: https://raw.githubusercontent.com/api-evangelist/aptera-motors/refs/heads/main/apis.yml
 x-type: company
