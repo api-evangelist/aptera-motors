@@ -80,7 +80,7 @@ apis:
   - MCP
   - Agents
   - Merchandise
-  x-platform: Shopify
+  x-platform: shopify
   x-authored-by: Shopify (platform-provided), not Aptera Motors
   properties:
   - type: MCPServer
@@ -95,6 +95,8 @@ apis:
     url: scopes/aptera-motors-scopes.yml
   - type: Conventions
     url: conventions/aptera-motors-conventions.yml
+  x-surface: platform-generated
+  x-platform-surface: storefront-mcp
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
