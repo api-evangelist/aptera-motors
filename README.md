@@ -64,39 +64,102 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Aptera Motors Corp. (Nasdaq: SEV) is a Carlsbad, California solar electric vehicle manufacturer founded by Steve Fambro and Chris Anthony, building a three-wheeled, two-seat enclosed autocycle covered in roughly 700 watts of integrated solar cells.
+Aptera Motors Corp. (Nasdaq: SEV) is a Carlsbad, California solar electric vehicle manufacturer founded by Steve Fambro and Chris Anthony. The company builds a three-wheeled, two-seat enclosed autocycle covered in roughly 700 watts of integrated solar cells, designed to add up to 40 miles of range per day from sunlight alone and to travel up to 10,000 miles a year on free solar power, with a 400-mile battery range on the Launch Edition, over 320 MPGe efficiency, a ~2,200 lb curb weight and 0-60 mph in under six seconds. Aptera sells reservations direct to consumers through its own configurator, runs a branded Shopify merchandise storefront, and has committed to open-source driver assistance by integrating comma.ai openpilot into the vehicle. Aptera publishes no public developer program, API documentation, or machine-readable API contract as of this enrichment pass.
 
-- Website — https://aptera.us/
-- Discovery Center (FAQ) — https://aptera.us/discovery-center/
-- Reserve / configurator — https://aptera.us/reserve/
-- Updates — https://aptera.us/updates/
-- Investor relations — https://ir.aptera.us/
-- Store — https://shop.aptera.us/
-- Secondary market — https://forgeglobal.com/aptera-motors_stock/
+**Areas:** Company · Automotive · Electric Vehicles · Solar · Manufacturing · Clean Energy · Transportation · Consumer Products · Mobility
 
-## API posture
+## Aptera Motors on APIs.io
 
-Aptera Motors publishes **no developer program**: no developer portal, no API
-documentation, no OpenAPI/AsyncAPI definition, no SDKs, no status page, no
-`security.txt`, and no A2A agent card. `api.aptera.us`, `developer.aptera.us` and
-`docs.aptera.us` do not resolve.
+Everything profiled for Aptera Motors is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/aptera-motors/](https://apis.io/providers/aptera-motors/)** — or go straight to one of the APIs or properties below.
 
-What the enrichment pass did find is a real, live, **anonymous agent surface on the
-merchandise storefront** — Shopify platform infrastructure served from Aptera's own
-hostname:
+### APIs (1)
 
-- **MCP server** — `https://shop.aptera.us/api/mcp`, protocol `2025-06-18`, five
-  tools verified via `tools/list` (`search_catalog`, `get_product_details`,
-  `get_cart`, `update_cart`, `search_shop_policies_and_faqs`)
-- **UCP merchant profile** — `/.well-known/ucp`, Universal Commerce Protocol
-  `2026-04-08`, eight capabilities
-- **OAuth 2.0 / OpenID Connect discovery** — `/.well-known/openid-configuration`,
-  `/.well-known/oauth-authorization-server`, `/.well-known/oauth-protected-resource`
-- **Agent instructions** — `/llms.txt` and `/agents.md`, both linked from `robots.txt`
+- [Aptera Shop Storefront Agent Commerce API](https://apis.io/apis/aptera-motors/aptera-shop-storefront-agent-commerce-api/) — The agent-facing commerce surface of Aptera Motors' branded merchandise storefront at shop.aptera.us. It is a Model Context Protocol server (protocol…
 
-A second MCP endpoint exists on the corporate WordPress site
-(`/wp-json/mcp/mcp-adapter-default-server`) but is auth-gated (HTTP 401) and
-undocumented; it is recorded as detected only.
+### Published properties
 
-See `mcp/`, `well-known/`, `authentication/`, `scopes/`, `conventions/`,
-`conformance/`, `skills/`, `llms/` and `security/` for the captured artifacts.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [aptera-motors-mcp.yml](https://apis.io/servers/aptera-motors/aptera-motors-mcp-yml/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Aptera Motors Authentication](https://apis.io/security/aptera-motors/aptera-motors-authentication/)
+- [Aptera Motors Domain Security](https://apis.io/security/aptera-motors/aptera-motors-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Aptera Motors Scopes](https://apis.io/scopes/aptera-motors/aptera-motors-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://aptera.us/)
+- [Pricing](https://aptera.us/reserve/)
+- [Sign up](https://aptera.us/reserve/)
+- [Support](https://aptera.us/contact-us/)
+- [Blog](https://aptera.us/updates/)
+- [Terms of service](https://aptera.us/terms-of-service/)
+- [Privacy policy](https://aptera.us/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 22.3** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 22.6 |
+| Access clarity | 32.9 |
+
+**Agent readiness 21.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+
+**Regulatory alignment 34.4** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/aptera-motors/](https://apis.io/providers/aptera-motors/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Aptera Motors: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/aptera-motors/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
